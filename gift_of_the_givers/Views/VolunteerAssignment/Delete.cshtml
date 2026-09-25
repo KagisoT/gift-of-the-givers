@@ -1,0 +1,99 @@
+﻿@model gift_of_the_givers.Models.VolunteerAssignment
+
+@{
+    ViewData["Title"] = "Delete Assignment";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+                <div class="card-body p-5 text-center">
+
+                    <div class="rounded-circle bg-danger-subtle
+                                text-danger d-flex align-items-center
+                                justify-content-center mx-auto mb-4"
+                         style="width:90px;height:90px;">
+
+                        <i class="bi bi-trash3-fill fs-2"></i>
+
+                    </div>
+
+                    <h2 class="fw-bold">
+                        Remove Assignment
+                    </h2>
+
+                    <p class="text-muted">
+                        Are you sure you want to remove this volunteer
+                        assignment?
+                    </p>
+
+                    <div class="bg-light rounded-4 p-4 my-4">
+
+                        <h4 class="fw-bold">
+
+                            @Model.Volunteer?.FirstName
+                            @Model.Volunteer?.LastName
+
+                        </h4>
+
+                        <p class="mb-1">
+                            <strong>Project:</strong>
+                            @Model.ReliefProject?.Name
+                        </p>
+
+                        <p class="mb-1">
+                            <strong>Role:</strong>
+                            @Model.Role
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Status:</strong>
+                            @Model.Status
+                        </p>
+
+                    </div>
+
+                    <form asp-action="Delete"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               asp-for="VolunteerAssignmentId" />
+
+                        <div class="d-flex justify-content-center gap-3">
+
+                            <a asp-action="Details"
+                               asp-route-id="@Model.VolunteerAssignmentId"
+                               class="btn btn-outline-secondary btn-lg px-4">
+
+                                Cancel
+
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg px-4">
+
+                                <i class="bi bi-trash me-1"></i>
+                                Remove Assignment
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

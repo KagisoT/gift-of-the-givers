@@ -1,0 +1,832 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using gift_of_the_givers.Models
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Gift of the Givers Foundation
+    </title>
+
+    <meta name="description"
+          content="Gift of the Givers Foundation - Making a difference through humanitarian relief, donations and volunteer support." />
+
+    <!-- ========================================================= -->
+    <!-- BOOTSTRAP -->
+    <!-- ========================================================= -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+
+    <!-- ========================================================= -->
+    <!-- BOOTSTRAP ICONS -->
+    <!-- ========================================================= -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <!-- ========================================================= -->
+    <!-- GOOGLE FONT -->
+    <!-- ========================================================= -->
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin />
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet" />
+
+    <!-- ========================================================= -->
+    <!-- APPLICATION CSS -->
+    <!-- ========================================================= -->
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    
+
+    @await RenderSectionAsync("Styles", required: false)
+
+</head>
+
+<body>
+
+    <!-- ========================================================= -->
+    <!-- TOP BAR -->
+    <!-- ========================================================= -->
+
+    <div class="top-bar">
+
+        <div class="container">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+                    <i class="bi bi-heart-fill text-danger me-1"></i>
+
+                    Making a difference where it matters.
+                </div>
+
+                <div class="d-flex gap-3">
+
+                    <a asp-controller="Home"
+                       asp-action="Contact">
+
+                        Contact Us
+
+                    </a>
+
+                    <span>|</span>
+
+                    <span>
+                        <i class="bi bi-telephone me-1"></i>
+                        Support
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- NAVIGATION -->
+    <!-- ========================================================= -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg main-navbar">
+
+            <div class="container">
+
+                <!-- BRAND -->
+
+                <a class="navbar-brand"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <div class="brand-icon">
+
+                        <i class="bi bi-heart-pulse-fill"></i>
+
+                    </div>
+
+                    <div class="brand-text">
+
+                        <span class="brand-name">
+                            Gift of the Givers
+                        </span>
+
+                        <span class="brand-subtitle">
+                            HUMANITARIAN FOUNDATION
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- MOBILE BUTTON -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavigation"
+                        aria-controls="mainNavigation"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+
+                <!-- NAVIGATION CONTENT -->
+
+                <div class="collapse navbar-collapse"
+                     id="mainNavigation">
+
+                    <!-- MAIN LINKS -->
+
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+
+                                <i class="bi bi-house-door me-1"></i>
+                                Home
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="About">
+
+                                About
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="ReliefProject"
+                               asp-action="Index">
+
+                                <i class="bi bi-globe2 me-1"></i>
+                                Projects
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="Volunteer"
+                               asp-action="Index">
+
+                                <i class="bi bi-people me-1"></i>
+                                Volunteer
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Contact">
+
+                                Contact
+
+                            </a>
+
+                        </li>
+
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-controller="Donation"
+                                   asp-action="MyDonations">
+
+                                    <i class="bi bi-clock-history me-1"></i>
+                                    My Donations
+
+                                </a>
+
+                            </li>
+                        }
+
+
+                        @if (User.IsInRole("Employee"))
+                        {
+                            <li class="nav-item">
+
+                                <a class="nav-link"
+                                   asp-controller="Employee"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-speedometer2 me-1"></i>
+                                    Dashboard
+
+                                </a>
+
+                            </li>
+                        }
+
+                    </ul>
+
+
+                    <!-- RIGHT SIDE ACTIONS -->
+
+                    <div class="desktop-actions d-flex align-items-center gap-2">
+
+                       
+
+
+                        <!-- AUTHENTICATED USER -->
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <div class="dropdown">
+
+                                <a class="nav-link user-menu dropdown-toggle"
+                                   href="#"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+
+                                    <span class="user-avatar">
+
+                                        <i class="bi bi-person-fill"></i>
+
+                                    </span>
+
+                                    <span class="d-none d-xl-inline">
+
+                                        @(User.Identity.Name ?? "Account")
+
+                                    </span>
+
+                                </a>
+
+
+                                <ul class="dropdown-menu dropdown-menu-end">
+
+                                    <li>
+
+                                        <h6 class="dropdown-header">
+
+                                            <i class="bi bi-person-circle me-1"></i>
+
+                                            My Account
+
+                                        </h6>
+
+                                    </li>
+
+                                    <li>
+                                        <hr class="dropdown-divider" />
+                                    </li>
+
+                                    <li>
+
+                                        <a class="dropdown-item"
+                                           asp-area="Identity"
+                                           asp-page="/Account/Manage/Index">
+
+                                            <i class="bi bi-person me-2"></i>
+
+                                            Profile
+
+                                        </a>
+
+                                    </li>
+
+
+                                    <li>
+
+                                        <a class="dropdown-item"
+                                           asp-controller="Donation"
+                                           asp-action="MyDonations">
+
+                                            <i class="bi bi-heart me-2"></i>
+
+                                            My Donations
+
+                                        </a>
+
+                                    </li>
+
+
+                                    <li>
+
+                                        <a class="dropdown-item"
+                                           asp-controller="Volunteer"
+                                           asp-action="MyApplication">
+
+                                            <i class="bi bi-people me-2"></i>
+
+                                            My Volunteer Application
+
+                                        </a>
+
+                                    </li>
+
+
+                                    @if (User.IsInRole("Employee"))
+                                    {
+                                        <li>
+                                            <hr class="dropdown-divider" />
+                                        </li>
+
+                                        <li>
+
+                                            <a class="dropdown-item"
+                                               asp-controller="Employee"
+                                               asp-action="Dashboard">
+
+                                                <i class="bi bi-speedometer2 me-2"></i>
+
+                                                Employee Dashboard
+
+                                            </a>
+
+                                        </li>
+                                    }
+
+
+                                    <li>
+                                        <hr class="dropdown-divider" />
+                                    </li>
+
+
+                                    <li>
+
+                                        <form asp-area="Identity"
+                                              asp-page="/Account/Logout"
+                                              asp-route-returnUrl="/"
+                                              method="post">
+
+                                            <button type="submit"
+                                                    class="dropdown-item text-danger">
+
+                                                <i class="bi bi-box-arrow-right me-2"></i>
+
+                                                Logout
+
+                                            </button>
+
+                                        </form>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- LOGIN -->
+
+                            <a class="btn btn-outline-dark"
+                               asp-area="Identity"
+                               asp-page="/Account/Login">
+
+                                Login
+
+                            </a>
+
+
+                            <!-- REGISTER -->
+
+                            <a class="btn btn-dark"
+                               asp-area="Identity"
+                               asp-page="/Account/Register">
+
+                                Register
+
+                            </a>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ========================================================= -->
+    <!-- TEMP DATA ALERTS -->
+    <!-- ========================================================= -->
+
+    <div class="container alert-container mt-3">
+
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show site-alert"
+                 role="alert">
+
+                <i class="bi bi-check-circle-fill me-2"></i>
+
+                @TempData["SuccessMessage"]
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
+
+            </div>
+        }
+
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show site-alert"
+                 role="alert">
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                @TempData["ErrorMessage"]
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
+
+            </div>
+        }
+
+
+        @if (TempData["InfoMessage"] != null)
+        {
+            <div class="alert alert-info alert-dismissible fade show site-alert"
+                 role="alert">
+
+                <i class="bi bi-info-circle-fill me-2"></i>
+
+                @TempData["InfoMessage"]
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close">
+                </button>
+
+            </div>
+        }
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================================================= -->
+
+    <main class="main-content">
+
+        @RenderBody()
+
+    </main>
+
+
+    <!-- ========================================================= -->
+    <!-- FOOTER -->
+    <!-- ========================================================= -->
+
+    <footer class="site-footer">
+
+        <div class="container footer-main">
+
+            <div class="row g-5">
+
+                <!-- ABOUT -->
+
+                <div class="col-lg-5">
+
+                    <div class="footer-brand">
+
+                        <div class="footer-brand-icon">
+
+                            <i class="bi bi-heart-pulse-fill"></i>
+
+                        </div>
+
+                        Gift of the Givers
+
+                    </div>
+
+                    <p class="footer-description">
+
+                        Gift of the Givers is a humanitarian organisation
+                        focused on providing assistance to communities
+                        affected by disasters, poverty and emergencies.
+
+                        Your support helps us provide meaningful assistance
+                        and restore dignity.
+
+                    </p>
+
+
+                    <div class="social-links">
+
+                        <a href="#"
+                           class="social-link"
+                           aria-label="Facebook">
+
+                            <i class="bi bi-facebook"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link"
+                           aria-label="Twitter">
+
+                            <i class="bi bi-twitter-x"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link"
+                           aria-label="Instagram">
+
+                            <i class="bi bi-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                           class="social-link"
+                           aria-label="YouTube">
+
+                            <i class="bi bi-youtube"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- QUICK LINKS -->
+
+                <div class="col-6 col-lg-2">
+
+                    <h6 class="footer-title">
+                        Quick Links
+                    </h6>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a asp-controller="Home"
+                               asp-action="Index">
+                                Home
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home"
+                               asp-action="About">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="ReliefProject"
+                               asp-action="Index">
+                                Our Projects
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Volunteer"
+                               asp-action="Index">
+                                Volunteer
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Home"
+                               asp-action="Contact">
+                                Contact
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+
+                <!-- SUPPORT -->
+
+                <div class="col-6 col-lg-2">
+
+                    <h6 class="footer-title">
+                        Support
+                    </h6>
+
+                    <ul class="footer-links">
+
+                        <li>
+                            <a asp-controller="Donation"
+                               asp-action="Index">
+                                Donate
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Donation"
+                               asp-action="Create">
+                                Make a Donation
+                            </a>
+                        </li>
+
+                        <li>
+                            <a asp-controller="Volunteer"
+                               asp-action="Create">
+                                Become a Volunteer
+                            </a>
+                        </li>
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li>
+                                <a asp-controller="Donation"
+                                   asp-action="MyDonations">
+                                    My Donations
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+                </div>
+
+
+                <!-- CONTACT -->
+
+                <div class="col-lg-3">
+
+                    <h6 class="footer-title">
+                        Contact Us
+                    </h6>
+
+
+                    <div class="footer-contact">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <span>
+                            Johannesburg, South Africa
+                        </span>
+
+                    </div>
+
+
+                    <div class="footer-contact">
+
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <span>
+                            +27 11 000 0000
+                        </span>
+
+                    </div>
+
+
+                    <div class="footer-contact">
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <span>
+                            info@giftofthegivers.org
+                        </span>
+
+                    </div>
+
+
+                    <div class="footer-contact">
+
+                        <i class="bi bi-clock-fill"></i>
+
+                        <span>
+                            Monday - Friday
+                            <br />
+                            08:00 - 17:00
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER BOTTOM -->
+
+        <div class="footer-bottom">
+
+            <div class="container">
+
+                <div class="row align-items-center">
+
+                    <div class="col-md-6 text-center text-md-start">
+
+                        <span>
+                            &copy; @DateTime.Now.Year
+                            Gift of the Givers Foundation.
+                            All rights reserved.
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+
+                        <a asp-controller="Home"
+                           asp-action="Index"
+                           class="me-3">
+
+                            Privacy
+
+                        </a>
+
+                        <a asp-controller="Home"
+                           asp-action="Index">
+
+                            Terms
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ========================================================= -->
+    <!-- BOOTSTRAP JAVASCRIPT -->
+    <!-- ========================================================= -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+
+
+    <!-- ========================================================= -->
+    <!-- APPLICATION JAVASCRIPT -->
+    <!-- ========================================================= -->
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+
+    <!-- ========================================================= -->
+    <!-- PAGE-SPECIFIC SCRIPTS -->
+    <!-- ========================================================= -->
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+﻿@model IEnumerable<gift_of_the_givers.Models.ProjectUpdate>
+
+@{
+    Layout = "_EmployeeLayout";
+    ViewData["Title"] = "Project Updates";
+}
+
+<div class="mb-4">
+
+    <h1 class="fw-bold mb-1">
+        Project Updates
+    </h1>
+
+    <p class="text-muted">
+        Monitor updates from humanitarian projects.
+    </p>
+
+</div>
+
+
+<div class="row g-4">
+
+    @foreach (var update in Model)
+    {
+        <div class="col-lg-6">
+
+            <div class="bg-white border rounded-4 p-4">
+
+                <div class="d-flex justify-content-between">
+
+                    <span class="badge bg-danger-subtle text-danger">
+
+                        @update.ReliefProject?.Name
+
+                    </span>
+
+                    <small class="text-muted">
+
+                        @update.CreatedAt.ToString("dd MMM yyyy")
+
+                    </small>
+
+                </div>
+
+
+                <h5 class="fw-bold mt-3">
+
+                    @update.Title
+
+                </h5>
+
+
+                <p class="text-muted">
+
+                    @update.Description
+
+                </p>
+
+
+                <small class="text-muted">
+
+                    <i class="bi bi-person me-1"></i>
+
+                    @(update.Employee?.Email ?? "Employee")
+
+                </small>
+
+            </div>
+
+        </div>
+    }
+
+</div>
