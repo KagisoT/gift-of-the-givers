@@ -1,0 +1,604 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- ========================================================= -->
+<!-- HERO SECTION -->
+<!-- ========================================================= -->
+
+<section class="hero-section">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-75 py-5">
+
+            <!-- Hero Text -->
+
+            <div class="col-lg-7">
+
+                <span class="hero-badge">
+                    <i class="bi bi-heart-fill me-2"></i>
+                    HUMANITARIAN RELIEF & SUPPORT
+                </span>
+
+                <h1 class="hero-title mt-4">
+                    Restoring
+                    <span class="hero-highlight">Dignity.</span>
+                    <br />
+                    Saving
+                    <span class="hero-highlight">Lives.</span>
+                </h1>
+
+                <p class="hero-description mt-4">
+                    Together, we can provide hope and practical assistance
+                    to communities affected by disasters, poverty and
+                    humanitarian emergencies.
+                </p>
+
+                <div class="hero-actions mt-4">
+
+                    <a asp-controller="Donation"
+                       asp-action="Create"
+                       class="btn btn-danger btn-lg hero-primary-btn">
+
+                        <i class="bi bi-heart-fill me-2"></i>
+
+                        Donate Now
+
+                    </a>
+
+                    <a asp-controller="Volunteer"
+                       asp-action="Create"
+                       class="btn btn-outline-dark btn-lg hero-secondary-btn">
+
+                        <i class="bi bi-people-fill me-2"></i>
+
+                        Become a Volunteer
+
+                    </a>
+
+                </div>
+
+                <!-- Small Impact Information -->
+
+                <div class="hero-impact mt-5">
+
+                    <div class="impact-item">
+
+                        <div class="impact-icon">
+
+                            <i class="bi bi-box-seam"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Emergency Relief</strong>
+
+                            <small>
+                                Rapid humanitarian response
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="impact-item">
+
+                        <div class="impact-icon">
+
+                            <i class="bi bi-people-fill"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Community Support</strong>
+
+                            <small>
+                                Helping communities recover
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Hero Visual -->
+
+            <div class="col-lg-5 mt-5 mt-lg-0">
+
+                <div class="hero-card-wrapper">
+
+                    <div class="hero-image-card">
+
+                        <div class="hero-image-placeholder">
+
+                            <i class="bi bi-globe-americas"></i>
+
+                            <h3>
+                                Helping Communities
+                            </h3>
+
+                            <p>
+                                One contribution can make a difference.
+                            </p>
+
+                        </div>
+
+                        <!-- Floating card -->
+
+                        <div class="hero-floating-card">
+
+                            <div class="floating-icon">
+
+                                <i class="bi bi-heart-fill"></i>
+
+                            </div>
+
+                            <div>
+
+                                <small>
+                                    Your support
+                                </small>
+
+                                <strong>
+                                    creates impact
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- IMPACT STATISTICS -->
+<!-- ========================================================= -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="stats-card">
+
+            <div class="row g-0">
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+
+                        <h3>500+</h3>
+
+                        <p>
+                            Volunteers
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-heart-fill"></i>
+                        </div>
+
+                        <h3>1,000+</h3>
+
+                        <p>
+                            Donations
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-globe2"></i>
+                        </div>
+
+                        <h3>50+</h3>
+
+                        <p>
+                            Relief Projects
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-6 col-lg-3">
+
+                    <div class="stat-item">
+
+                        <div class="stat-icon">
+                            <i class="bi bi-box-seam-fill"></i>
+                        </div>
+
+                        <h3>100K+</h3>
+
+                        <p>
+                            People Supported
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- MISSION SECTION -->
+<!-- ========================================================= -->
+
+<section class="mission-section py-5">
+
+    <div class="container py-lg-5">
+
+        <div class="row align-items-center g-5">
+
+            <div class="col-lg-6">
+
+                <span class="section-label">
+                    OUR MISSION
+                </span>
+
+                <h2 class="section-title mt-3">
+                    Compassion in action.
+                    <br />
+                    <span>Hope in every community.</span>
+                </h2>
+
+                <p class="section-text mt-4">
+                    Our mission is to provide meaningful humanitarian
+                    assistance to people affected by poverty, natural
+                    disasters and emergencies.
+                </p>
+
+                <p class="section-text">
+                    Through donations, volunteers and coordinated relief
+                    projects, communities can receive the resources and
+                    support they need during difficult times.
+                </p>
+
+                <a asp-controller="Home"
+                   asp-action="About"
+                   class="btn btn-dark mt-3">
+
+                    Learn More About Us
+
+                    <i class="bi bi-arrow-right ms-2"></i>
+
+                </a>
+
+            </div>
+
+
+            <div class="col-lg-6">
+
+                <div class="mission-grid">
+
+                    <div class="mission-box mission-box-red">
+
+                        <div class="mission-box-icon">
+
+                            <i class="bi bi-heart-pulse-fill"></i>
+
+                        </div>
+
+                        <h5>
+                            Humanitarian Aid
+                        </h5>
+
+                        <p>
+                            Providing essential assistance to people
+                            facing humanitarian emergencies.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mission-box">
+
+                        <div class="mission-box-icon">
+
+                            <i class="bi bi-droplet-fill"></i>
+
+                        </div>
+
+                        <h5>
+                            Essential Supplies
+                        </h5>
+
+                        <p>
+                            Supporting communities with food, water
+                            and essential resources.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mission-box">
+
+                        <div class="mission-box-icon">
+
+                            <i class="bi bi-house-heart-fill"></i>
+
+                        </div>
+
+                        <h5>
+                            Community Recovery
+                        </h5>
+
+                        <p>
+                            Helping communities rebuild and recover
+                            after emergencies.
+                        </p>
+
+                    </div>
+
+
+                    <div class="mission-box">
+
+                        <div class="mission-box-icon">
+
+                            <i class="bi bi-person-hearts"></i>
+
+                        </div>
+
+                        <h5>
+                            Volunteer Action
+                        </h5>
+
+                        <p>
+                            Connecting people who want to make a
+                            meaningful difference.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- HOW YOU CAN HELP -->
+<!-- ========================================================= -->
+
+<section class="help-section py-5">
+
+    <div class="container py-lg-5">
+
+        <div class="text-center mb-5">
+
+            <span class="section-label">
+                GET INVOLVED
+            </span>
+
+            <h2 class="section-title mt-3">
+                There are many ways to help
+            </h2>
+
+            <p class="section-text mx-auto"
+               style="max-width: 650px;">
+
+                Whether you donate, volunteer or help spread awareness,
+                your contribution can help us reach more people in need.
+
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <!-- Donate -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-icon">
+
+                        <i class="bi bi-heart-fill"></i>
+
+                    </div>
+
+                    <h4>
+                        Donate
+                    </h4>
+
+                    <p>
+                        Your donation can help provide essential
+                        resources and humanitarian assistance.
+                    </p>
+
+                    <a asp-controller="Donation"
+                       asp-action="Create"
+                       class="help-link">
+
+                        Donate Now
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Volunteer -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-icon">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+                    <h4>
+                        Volunteer
+                    </h4>
+
+                    <p>
+                        Share your skills, time and energy by joining
+                        our volunteer community.
+                    </p>
+
+                    <a asp-controller="Volunteer"
+                       asp-action="Create"
+                       class="help-link">
+
+                        Join Us
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Projects -->
+
+            <div class="col-md-4">
+
+                <div class="help-card">
+
+                    <div class="help-icon">
+
+                        <i class="bi bi-globe2"></i>
+
+                    </div>
+
+                    <h4>
+                        Our Projects
+                    </h4>
+
+                    <p>
+                        Explore current relief projects and discover
+                        where assistance is making an impact.
+                    </p>
+
+                    <a asp-controller="ReliefProject"
+                       asp-action="Index"
+                       class="help-link">
+
+                        View Projects
+
+                        <i class="bi bi-arrow-right"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- PROJECT CTA -->
+<!-- ========================================================= -->
+
+<section class="project-cta">
+
+    <div class="container">
+
+        <div class="cta-card">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <span class="cta-label">
+                        MAKE AN IMPACT
+                    </span>
+
+                    <h2>
+                        Together, we can help communities recover.
+                    </h2>
+
+                    <p>
+                        Support a relief project, become a volunteer
+                        or make a contribution today.
+                    </p>
+
+                </div>
+
+
+                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+
+                    <a asp-controller="Donation"
+                       asp-action="Create"
+                       class="btn btn-light btn-lg px-4">
+
+                        <i class="bi bi-heart-fill me-2"></i>
+
+                        Support Our Mission
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+

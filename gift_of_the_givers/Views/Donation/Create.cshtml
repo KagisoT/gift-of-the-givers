@@ -1,0 +1,245 @@
+﻿@model gift_of_the_givers.Models.Donation
+
+@{
+    ViewData["Title"] = "Make a Donation";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="text-center mb-4">
+
+                <span class="badge bg-danger mb-2">
+                    DONATION
+                </span>
+
+                <h1 class="fw-bold">
+                    Make a Donation
+                </h1>
+
+                <p class="text-muted">
+                    Every contribution helps us support people
+                    and communities in need.
+                </p>
+
+            </div>
+
+            <div class="card border-0 shadow-lg rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form asp-action="Create"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger">
+                        </div>
+
+                        <!-- Amount -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="Amount"
+                                   class="form-label fw-semibold">
+                                Donation Amount
+                            </label>
+
+                            <div class="input-group input-group-lg">
+
+                                <span class="input-group-text">
+                                    <i class="bi bi-cash-stack"></i>
+                                </span>
+
+                                <input asp-for="Amount"
+                                       class="form-control"
+                                       placeholder="Enter amount"
+                                       min="0.01"
+                                       step="0.01" />
+
+                            </div>
+
+                            <span asp-validation-for="Amount"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- Currency -->
+
+                        <div class="mb-4">
+
+                            <label asp-for="Currency"
+                                   class="form-label fw-semibold">
+                                Currency
+                            </label>
+
+                            <select asp-for="Currency"
+                                    class="form-select form-select-lg"
+                                    asp-items="Html.GetEnumSelectList<gift_of_the_givers.Models.DonationCurrency>()">
+                            </select>
+
+                            <span asp-validation-for="Currency"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- Donation Type -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Donation Type
+                            </label>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check border rounded-3 p-3">
+
+                                        <input class="form-check-input"
+                                               type="radio"
+                                               asp-for="DonationType"
+                                               value="OneTime"
+                                               id="oneTime" />
+
+                                        <label class="form-check-label"
+                                               for="oneTime">
+
+                                            <strong>
+                                                One-Time Donation
+                                            </strong>
+
+                                            <br />
+
+                                            <small class="text-muted">
+                                                Make a single contribution.
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6">
+
+                                    <div class="form-check border rounded-3 p-3">
+
+                                        <input class="form-check-input"
+                                               type="radio"
+                                               asp-for="DonationType"
+                                               value="Recurring"
+                                               id="recurring" />
+
+                                        <label class="form-check-label"
+                                               for="recurring">
+
+                                            <strong>
+                                                Recurring Donation
+                                            </strong>
+
+                                            <br />
+
+                                            <small class="text-muted">
+                                                Support our mission regularly.
+                                            </small>
+
+                                        </label>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <span asp-validation-for="DonationType"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                        <!-- Anonymous -->
+
+                        <div class="mb-4">
+
+                            <div class="form-check">
+
+                                <input asp-for="IsAnonymous"
+                                       class="form-check-input"
+                                       id="anonymousDonation" />
+
+                                <label class="form-check-label"
+                                       for="anonymousDonation">
+
+                                    Make this donation anonymous
+
+                                </label>
+
+                            </div>
+
+                            <small class="text-muted">
+                                Anonymous donations will not be linked
+                                to your account.
+                            </small>
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <!-- Payment Placeholder -->
+
+                        <div class="alert alert-info">
+
+                            <i class="bi bi-info-circle me-2"></i>
+
+                            <strong>Payment Prototype</strong>
+
+                            <p class="mb-0 mt-1">
+                                This project records the donation as a
+                                prototype. A production implementation
+                                would connect this form to a secure
+                                payment provider.
+                            </p>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a asp-action="Index"
+                               class="btn btn-outline-secondary btn-lg">
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-danger btn-lg px-4">
+
+                                <i class="bi bi-heart-fill me-2"></i>
+
+                                Submit Donation
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

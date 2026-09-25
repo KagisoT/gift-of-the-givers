@@ -1,0 +1,394 @@
+﻿@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - Employee Dashboard
+    </title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+    <style>
+
+        body {
+            background: #f6f7f9;
+            font-family: Inter, Arial, sans-serif;
+            margin: 0;
+        }
+
+        .employee-wrapper {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* SIDEBAR */
+
+        .employee-sidebar {
+            width: 260px;
+            min-height: 100vh;
+            background: #171717;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .employee-brand {
+            padding: 25px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .employee-brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 11px;
+            background: #c8102e;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
+        .employee-brand-title {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+
+        .employee-brand-subtitle {
+            display: block;
+            color: #999;
+            font-size: 0.7rem;
+            margin-left: 54px;
+            margin-top: -5px;
+        }
+
+        .employee-nav {
+            padding: 25px 15px;
+            flex: 1;
+        }
+
+        .employee-nav-title {
+            text-transform: uppercase;
+            font-size: 0.65rem;
+            letter-spacing: 1px;
+            color: #777;
+            font-weight: 800;
+            padding: 0 12px;
+            margin-bottom: 10px;
+        }
+
+        .employee-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            margin-bottom: 5px;
+            border-radius: 9px;
+            color: #bdbdbd;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.2s ease;
+        }
+
+        .employee-nav-link i {
+            width: 20px;
+            font-size: 1rem;
+        }
+
+        .employee-nav-link:hover {
+            background: rgba(255,255,255,0.07);
+            color: white;
+        }
+
+        .employee-nav-link.active {
+            background: #c8102e;
+            color: white;
+        }
+
+        .employee-sidebar-bottom {
+            padding: 15px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .back-home {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 14px;
+            color: #aaa;
+            text-decoration: none;
+            border-radius: 9px;
+        }
+
+        .back-home:hover {
+            background: rgba(255,255,255,0.06);
+            color: white;
+        }
+
+        /* MAIN */
+
+        .employee-main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            min-height: 100vh;
+        }
+
+        .employee-topbar {
+            height: 75px;
+            background: white;
+            border-bottom: 1px solid #e9e9e9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+        }
+
+        .employee-topbar-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .employee-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .employee-user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #fff0f2;
+            color: #c8102e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .employee-content {
+            padding: 30px;
+        }
+
+        
+
+    </style>
+
+    @RenderSection("Styles", required: false)
+
+</head>
+
+<body>
+
+<div class="employee-wrapper">
+
+    <!-- SIDEBAR -->
+
+    <aside class="employee-sidebar">
+
+        <div class="employee-brand">
+
+            <div class="d-flex align-items-center">
+
+                <div class="employee-brand-icon">
+
+                    <i class="bi bi-heart-fill"></i>
+
+                </div>
+
+                <span class="employee-brand-title">
+                    Gift of the Givers
+                </span>
+
+            </div>
+
+            <span class="employee-brand-subtitle">
+                Employee Portal
+            </span>
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="employee-nav">
+
+            <div class="employee-nav-title">
+                Dashboard
+            </div>
+
+            <a asp-controller="Employee"
+               asp-action="Index"
+               class="employee-nav-link @(currentAction == "Index" ? "active" : "")">
+
+                <i class="bi bi-grid-1x2-fill"></i>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <div class="employee-nav-title mt-4">
+                Management
+            </div>
+
+
+            <a asp-controller="Employee"
+               asp-action="Volunteers"
+               class="employee-nav-link @(currentAction == "Volunteers" ? "active" : "")">
+
+                <i class="bi bi-people-fill"></i>
+
+                <span>
+                    Volunteers
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Employee"
+               asp-action="Donations"
+               class="employee-nav-link @(currentAction == "Donations" ? "active" : "")">
+
+                <i class="bi bi-heart-fill"></i>
+
+                <span>
+                    Donations
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Employee"
+               asp-action="Projects"
+               class="employee-nav-link @(currentAction == "Projects" ? "active" : "")">
+
+                <i class="bi bi-globe2"></i>
+
+                <span>
+                    Relief Projects
+                </span>
+
+            </a>
+
+
+            <a asp-controller="Employee"
+               asp-action="Updates"
+               class="employee-nav-link @(currentAction == "Updates" ? "active" : "")">
+
+                <i class="bi bi-newspaper"></i>
+
+                <span>
+                    Project Updates
+                </span>
+
+            </a>
+            <a asp-controller="VolunteerAssignment"
+               asp-action="Index"
+               class="employee-nav-link">
+
+                <i class="bi bi-person-workspace"></i>
+
+                <span>
+                    Volunteer Assignments
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- BOTTOM -->
+
+        <div class="employee-sidebar-bottom">
+
+            <a asp-controller="Home"
+               asp-action="Index"
+               class="back-home">
+
+                <i class="bi bi-arrow-left"></i>
+
+                <span>
+                    Back to Website
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="employee-main">
+
+        <header class="employee-topbar">
+
+            <div class="employee-topbar-title">
+
+                @ViewData["Title"]
+
+            </div>
+
+            <div class="employee-user">
+
+                <div class="employee-user-icon">
+
+                    <i class="bi bi-person-fill"></i>
+
+                </div>
+
+                <div class="d-none d-md-block">
+
+                    <strong>
+                        Employee
+                    </strong>
+
+                    <small class="d-block text-muted">
+                        Administration Portal
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <div class="employee-content">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+
+</div>
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+@await RenderSectionAsync("Scripts", required: false)
+
+</body>
+
+</html>

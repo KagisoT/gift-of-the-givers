@@ -1,0 +1,181 @@
+﻿@model IEnumerable<gift_of_the_givers.Models.ReliefProject>
+
+@{
+    ViewData["Title"] = "Relief Projects";
+}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <span class="badge bg-danger-subtle text-danger px-3 py-2 mb-3">
+            HUMANITARIAN WORK
+        </span>
+
+        <h1 class="display-5 fw-bold">
+            Relief Projects
+        </h1>
+
+        <p class="text-muted mx-auto"
+           style="max-width:700px">
+
+            Discover the humanitarian projects helping communities
+            affected by disasters, poverty and humanitarian crises.
+
+        </p>
+
+    </div>
+
+    <!-- SEARCH -->
+
+    <form method="get"
+          class="row g-2 mb-5">
+
+        <div class="col-md-7">
+
+            <input type="text"
+                   name="search"
+                   value="@ViewBag.Search"
+                   class="form-control form-control-lg"
+                   placeholder="Search projects or locations..." />
+
+        </div>
+
+        <div class="col-md-3">
+
+            <select name="status"
+                    class="form-select form-select-lg">
+
+                <option value="">
+                    All statuses
+                </option>
+
+                @foreach (var status in Enum.GetValues<
+                    gift_of_the_givers.Models.ReliefProjectStatus>())
+                {
+                    <option value="@status"
+                            selected="@(ViewBag.Status?.ToString() == status.ToString())">
+
+                        @status
+
+                    </option>
+                }
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button type="submit"
+                    class="btn btn-danger btn-lg w-100">
+
+                <i class="bi bi-search me-1"></i>
+
+                Search
+
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <div class="row g-4">
+
+        @if (!Model.Any())
+        {
+            <div class="col-12">
+
+                <div class="text-center py-5">
+
+                    <i class="bi bi-globe2 display-4 text-muted"></i>
+
+                    <h4 class="mt-3">
+                        No projects found
+                    </h4>
+
+                    <p class="text-muted">
+                        Try changing your search criteria.
+                    </p>
+
+                </div>
+
+            </div>
+        }
+        else
+        {
+            foreach (var project in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+
+                        @if (!string.IsNullOrWhiteSpace(project.ImageUrl))
+                        {
+                            <img src="@project.ImageUrl"
+                                 class="card-img-top"
+                                 style="height:220px; object-fit:cover;"
+                                 alt="@project.Name" />
+                        }
+                        else
+                        {
+                            <div class="d-flex align-items-center justify-content-center bg-light"
+                                 style="height:220px;">
+
+                                <i class="bi bi-globe2 display-3 text-danger"></i>
+
+                            </div>
+                        }
+
+                        <div class="card-body p-4">
+
+                            <span class="badge bg-danger-subtle text-danger mb-2">
+
+                                @project.Status
+
+                            </span>
+
+                            <h4 class="fw-bold">
+
+                                @project.Name
+
+                            </h4>
+
+                            <p class="text-muted">
+
+                                @project.Description.Length > 140
+                                    ? project.Description.Substring(0, 140) + "..."
+                                    : project.Description
+
+                            </p>
+
+                            <div class="text-muted small mb-3">
+
+                                <i class="bi bi-geo-alt me-1"></i>
+
+                                @project.Location
+
+                            </div>
+
+                            <a asp-action="Details"
+                               asp-route-id="@project.ReliefProjectId"
+                               class="btn btn-outline-danger w-100">
+
+                                View Project
+
+                                <i class="bi bi-arrow-right ms-1"></i>
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+
+    </div>
+
+</div>

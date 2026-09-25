@@ -1,0 +1,298 @@
+﻿@model IEnumerable<gift_of_the_givers.Models.VolunteerAssignment>
+
+@{
+    ViewData["Title"] = "Volunteer Assignments";
+}
+
+<div class="container py-5">
+
+    <div class="d-flex flex-column flex-md-row
+                justify-content-between align-items-md-center
+                gap-3 mb-4">
+
+        <div>
+            <span class="badge bg-danger-subtle text-danger mb-2 px-3 py-2">
+                <i class="bi bi-people-fill me-1"></i>
+                Employee Management
+            </span>
+
+            <h1 class="fw-bold mb-1">
+                Volunteer Assignments
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage volunteer participation across relief projects.
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-danger btn-lg">
+
+            <i class="bi bi-person-plus-fill me-2"></i>
+            Assign Volunteer
+
+        </a>
+
+    </div>
+
+
+    <!-- Search -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body p-4">
+
+            <form asp-action="Index"
+                  method="get">
+
+                <div class="row g-3 align-items-end">
+
+                    <div class="col-lg-6">
+
+                        <label class="form-label fw-semibold">
+                            Search
+                        </label>
+
+                        <input type="text"
+                               name="search"
+                               value="@ViewBag.Search"
+                               class="form-control"
+                               placeholder="Volunteer, project or role..." />
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <label class="form-label fw-semibold">
+                            Status
+                        </label>
+
+                        <select name="status"
+                                class="form-select">
+
+                            <option value="">
+                                All statuses
+                            </option>
+
+                            @foreach (var status in Enum.GetValues<gift_of_the_givers.Models.AssignmentStatus>())
+                            {
+                                if (ViewBag.Status != null &&
+                                    (gift_of_the_givers.Models.AssignmentStatus)ViewBag.Status == status)
+                                {
+                                    <option value="@status" selected>
+                                        @status
+                                    </option>
+                                }
+                                else
+                                {
+                                    <option value="@status">
+                                        @status
+                                    </option>
+                                }
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <button type="submit"
+                                class="btn btn-outline-danger w-100">
+
+                            <i class="bi bi-search me-1"></i>
+                            Search Assignments
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+
+            <i class="bi bi-check-circle-fill me-2"></i>
+
+            @TempData["SuccessMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"></button>
+
+        </div>
+    }
+
+
+    @if (!Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body text-center py-5">
+
+                <i class="bi bi-clipboard-x display-3 text-muted"></i>
+
+                <h3 class="fw-bold mt-3">
+                    No assignments found
+                </h3>
+
+                <p class="text-muted">
+                    Create an assignment to connect a volunteer
+                    with a relief project.
+                </p>
+
+                <a asp-action="Create"
+                   class="btn btn-danger">
+
+                    Assign Volunteer
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th class="px-4">
+                                Volunteer
+                            </th>
+
+                            <th>
+                                Project
+                            </th>
+
+                            <th>
+                                Role
+                            </th>
+
+                            <th>
+                                Assigned
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th class="text-end px-4">
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var assignment in Model)
+                        {
+                            var statusClass = assignment.Status switch
+                            {
+                                gift_of_the_givers.Models.AssignmentStatus.Active
+                                    => "bg-success",
+
+                                gift_of_the_givers.Models.AssignmentStatus.Completed
+                                    => "bg-primary",
+
+                                gift_of_the_givers.Models.AssignmentStatus.Cancelled
+                                    => "bg-secondary",
+
+                                _ => "bg-warning text-dark"
+                            };
+
+                            <tr>
+
+                                <td class="px-4">
+
+                                    <div class="fw-semibold">
+
+                                        @assignment.Volunteer?.FirstName
+                                        @assignment.Volunteer?.LastName
+
+                                    </div>
+
+                                    <small class="text-muted">
+                                        @assignment.Volunteer?.Email
+                                    </small>
+
+                                </td>
+
+                                <td>
+
+                                    <a asp-controller="ReliefProject"
+                                       asp-action="Details"
+                                       asp-route-id="@assignment.ReliefProjectId"
+                                       class="text-decoration-none fw-semibold">
+
+                                        @assignment.ReliefProject?.Name
+
+                                    </a>
+
+                                </td>
+
+                                <td>
+                                    @assignment.Role
+                                </td>
+
+                                <td>
+                                    @assignment.AssignedDate.ToString("dd MMM yyyy")
+                                </td>
+
+                                <td>
+
+                                    <span class="badge @statusClass">
+                                        @assignment.Status
+                                    </span>
+
+                                </td>
+
+                                <td class="text-end px-4">
+
+                                    <a asp-action="Details"
+                                       asp-route-id="@assignment.VolunteerAssignmentId"
+                                       class="btn btn-sm btn-outline-secondary">
+
+                                        View
+
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@assignment.VolunteerAssignmentId"
+                                       class="btn btn-sm btn-outline-danger">
+
+                                        Edit
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    }
+
+</div>

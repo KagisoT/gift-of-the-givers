@@ -1,0 +1,367 @@
+﻿@model gift_of_the_givers.Models.Volunteer
+
+@{
+    ViewData["Title"] = "Volunteer Profile";
+
+    var statusClass = Model.Status switch
+    {
+        gift_of_the_givers.Models.VolunteerStatus.Active
+            => "bg-success",
+
+        gift_of_the_givers.Models.VolunteerStatus.Approved
+            => "bg-primary",
+
+        gift_of_the_givers.Models.VolunteerStatus.Pending
+            => "bg-warning text-dark",
+
+        _ => "bg-secondary"
+    };
+
+    var initials =
+        $"{Model.FirstName.FirstOrDefault()}{Model.LastName.FirstOrDefault()}";
+}
+
+<div class="container py-5">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            @TempData["SuccessMessage"]
+
+            <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row g-4">
+
+        <!-- Profile -->
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+
+                @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl"
+                         alt="@Model.FirstName @Model.LastName"
+                         style="width:100%;height:330px;object-fit:cover;" />
+                }
+                else
+                {
+                    <div class="bg-light d-flex justify-content-center
+                                align-items-center"
+                         style="height:330px;">
+
+                        <div class="rounded-circle bg-danger text-white
+                                    d-flex align-items-center justify-content-center
+                                    fw-bold"
+                             style="width:130px;height:130px;font-size:3rem;">
+
+                            @initials.ToUpper()
+
+                        </div>
+
+                    </div>
+                }
+
+                <div class="card-body p-4 text-center">
+
+                    <h2 class="fw-bold mb-2">
+                        @Model.FirstName @Model.LastName
+                    </h2>
+
+                    <span class="badge @statusClass px-3 py-2">
+                        @Model.Status
+                    </span>
+
+                    <p class="text-muted mt-3 mb-0">
+                        Volunteer since
+                        @Model.RegistrationDate.ToString("dd MMMM yyyy")
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Information -->
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <div class="d-flex justify-content-between
+                                align-items-center mb-4">
+
+                        <h3 class="fw-bold mb-0">
+                            Volunteer Information
+                        </h3>
+
+                        @if (User.IsInRole("Employee"))
+                        {
+                            <a asp-action="Edit"
+                               asp-route-id="@Model.VolunteerId"
+                               class="btn btn-outline-danger">
+
+                                <i class="bi bi-pencil me-1"></i>
+                                Edit
+
+                            </a>
+                        }
+
+                    </div>
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <div class="p-3 bg-light rounded-3">
+
+                                <small class="text-muted">
+                                    Email
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+                                    <i class="bi bi-envelope me-2 text-danger"></i>
+                                    @Model.Email
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="p-3 bg-light rounded-3">
+
+                                <small class="text-muted">
+                                    Phone
+                                </small>
+
+                                <div class="fw-semibold mt-1">
+
+                                    <i class="bi bi-telephone me-2 text-danger"></i>
+
+                                    @(string.IsNullOrWhiteSpace(Model.PhoneNumber)
+                                        ? "Not provided"
+                                        : Model.PhoneNumber)
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <h5 class="fw-bold">
+                                Skills
+                            </h5>
+
+                            <div class="p-3 bg-light rounded-3">
+                                @Model.Skills
+                            </div>
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <h5 class="fw-bold">
+                                Availability
+                            </h5>
+
+                            <div class="p-3 bg-light rounded-3">
+
+                                <i class="bi bi-clock text-danger me-2"></i>
+
+                                @Model.Availability
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Employee actions -->
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <hr class="my-5" />
+
+                        <h5 class="fw-bold mb-3">
+                            Volunteer Management
+                        </h5>
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            @if (Model.Status == gift_of_the_givers.Models.VolunteerStatus.Pending)
+                            {
+                                <form asp-action="Approve"
+                                      asp-route-id="@Model.VolunteerId"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-success">
+
+                                        <i class="bi bi-check-circle me-1"></i>
+                                        Approve
+
+                                    </button>
+
+                                </form>
+
+                                <form asp-action="Reject"
+                                      asp-route-id="@Model.VolunteerId"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-outline-secondary">
+
+                                        <i class="bi bi-x-circle me-1"></i>
+                                        Reject
+
+                                    </button>
+
+                                </form>
+                            }
+
+                            @if (Model.Status == gift_of_the_givers.Models.VolunteerStatus.Approved ||
+                                 Model.Status == gift_of_the_givers.Models.VolunteerStatus.Inactive)
+                            {
+                                <form asp-action="Activate"
+                                      asp-route-id="@Model.VolunteerId"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-success">
+
+                                        <i class="bi bi-person-check me-1"></i>
+                                        Activate
+
+                                    </button>
+
+                                </form>
+                            }
+
+                            @if (Model.Status == gift_of_the_givers.Models.VolunteerStatus.Active)
+                            {
+                                <form asp-action="Deactivate"
+                                      asp-route-id="@Model.VolunteerId"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="btn btn-warning">
+
+                                        <i class="bi bi-person-dash me-1"></i>
+                                        Deactivate
+
+                                    </button>
+
+                                </form>
+                            }
+
+                            <a asp-action="Delete"
+                               asp-route-id="@Model.VolunteerId"
+                               class="btn btn-outline-danger">
+
+                                <i class="bi bi-trash me-1"></i>
+                                Delete
+
+                            </a>
+
+                        </div>
+                        <a asp-controller="VolunteerAssignment"
+                           asp-action="Create"
+                           asp-route-volunteerId="@Model.VolunteerId"
+                           class="btn btn-danger">
+
+                            <i class="bi bi-person-plus-fill me-1"></i>
+                            Assign to Project
+
+                        </a>
+                    }
+
+                </div>
+
+            </div>
+
+
+            <!-- Assignments -->
+            @if (Model.Assignments != null &&
+                 Model.Assignments.Any())
+            {
+                <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+                    <div class="card-body p-4">
+
+                        <h4 class="fw-bold mb-4">
+                            <i class="bi bi-briefcase-fill text-danger me-2"></i>
+                            Project Assignments
+                        </h4>
+
+                        <div class="list-group list-group-flush">
+
+                            @foreach (var assignment in Model.Assignments)
+                            {
+                                <div class="list-group-item px-0">
+
+                                    <div class="d-flex justify-content-between">
+
+                                        <div>
+
+                                            <h6 class="fw-bold mb-1">
+                                                @assignment.ReliefProject?.Name
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                @assignment.Role
+                                            </small>
+
+                                        </div>
+
+                                        <span class="badge bg-light text-dark">
+                                            @assignment.Status
+                                        </span>
+
+                                    </div>
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to Volunteers
+
+        </a>
+
+    </div>
+
+</div>

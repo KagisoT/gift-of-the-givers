@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="app_class_library/app_class_library.csproj" />
+  <Project Path="gift_of_the_givers/gift_of_the_givers.csproj" />
+  <Project Path="TaxInvoiceFunction/TaxInvoiceFunction.csproj" />
+</Solution>

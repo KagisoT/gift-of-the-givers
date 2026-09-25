@@ -1,0 +1,104 @@
+﻿@model gift_of_the_givers.Models.ProjectUpdate
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <a asp-controller="ReliefProject"
+               asp-action="Details"
+               asp-route-id="@Model.ReliefProjectId"
+               class="text-decoration-none text-danger">
+
+                <i class="bi bi-arrow-left me-1"></i>
+
+                Back to Project
+
+            </a>
+
+
+            <div class="card border-0 shadow-sm rounded-4 mt-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <span class="badge bg-danger-subtle text-danger">
+
+                        @Model.ReliefProject?.Name
+
+                    </span>
+
+
+                    <h1 class="fw-bold mt-3">
+
+                        @Model.Title
+
+                    </h1>
+
+
+                    <div class="text-muted mb-4">
+
+                        <i class="bi bi-calendar3 me-1"></i>
+
+                        @Model.CreatedAt.ToString(
+                            "dd MMMM yyyy")
+
+                        <span class="mx-2">•</span>
+
+                        <i class="bi bi-person me-1"></i>
+
+                        @(Model.Employee?.FirstName ?? "Employee")
+                        @(Model.Employee?.LastName ?? "")
+
+                    </div>
+
+
+                    <hr />
+
+
+                    <div class="mt-4"
+                         style="white-space: pre-line;">
+
+                        @Model.Description
+
+                    </div>
+
+
+                    @if (User.IsInRole("Employee"))
+                    {
+                        <div class="border-top mt-5 pt-4 d-flex gap-2">
+
+                            <a asp-action="Edit"
+                               asp-route-id="@Model.ProjectUpdateId"
+                               class="btn btn-danger">
+
+                                <i class="bi bi-pencil me-1"></i>
+
+                                Edit
+
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@Model.ProjectUpdateId"
+                               class="btn btn-outline-danger">
+
+                                Delete
+
+                            </a>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,217 @@
+﻿@model gift_of_the_givers.Models.ReliefProject
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container py-5">
+
+    <div class="row g-5">
+
+        <div class="col-lg-7">
+
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl"
+                     class="img-fluid rounded-4 shadow-sm w-100"
+                     style="max-height:500px; object-fit:cover;"
+                     alt="@Model.Name" />
+            }
+            else
+            {
+                <div class="bg-light rounded-4 d-flex align-items-center justify-content-center"
+                     style="height:400px;">
+
+                    <i class="bi bi-globe2 display-1 text-danger"></i>
+
+                </div>
+            }
+
+        </div>
+
+
+        <div class="col-lg-5">
+
+            <span class="badge bg-danger-subtle text-danger mb-3">
+
+                @Model.Status
+
+            </span>
+
+            <h1 class="fw-bold">
+
+                @Model.Name
+
+            </h1>
+
+            <p class="text-muted">
+
+                @Model.Description
+
+            </p>
+
+
+            <div class="border-top pt-4 mt-4">
+
+                <div class="mb-3">
+
+                    <small class="text-muted d-block">
+                        LOCATION
+                    </small>
+
+                    <strong>
+                        <i class="bi bi-geo-alt text-danger me-1"></i>
+                        @Model.Location
+                    </strong>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <small class="text-muted d-block">
+                        START DATE
+                    </small>
+
+                    <strong>
+                        @Model.StartDate.ToString("dd MMMM yyyy")
+                    </strong>
+
+                </div>
+
+
+                @if (Model.EndDate.HasValue)
+                {
+                    <div class="mb-3">
+
+                        <small class="text-muted d-block">
+                            END DATE
+                        </small>
+
+                        <strong>
+                            @Model.EndDate.Value.ToString("dd MMMM yyyy")
+                        </strong>
+
+                    </div>
+                }
+
+            </div>
+
+
+            @if (User.IsInRole("Employee"))
+            {
+                <div class="d-flex gap-2 mt-4">
+
+                    <a asp-action="Edit"
+                       asp-route-id="@Model.ReliefProjectId"
+                       class="btn btn-danger">
+
+                        <i class="bi bi-pencil me-1"></i>
+
+                        Edit
+
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@Model.ReliefProjectId"
+                       class="btn btn-outline-danger">
+
+                        Delete
+
+                    </a>
+                    <a asp-controller="VolunteerAssignment"
+                       asp-action="Create"
+                       asp-route-projectId="@Model.ReliefProjectId"
+                       class="btn btn-danger">
+
+                        <i class="bi bi-person-plus-fill me-1"></i>
+                        Assign Volunteer
+
+                    </a>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- PROJECT UPDATES -->
+
+    <div class="mt-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h3 class="fw-bold mb-0">
+        Project Updates
+    </h3>
+
+    @if (User.IsInRole("Employee"))
+    {
+        <a asp-controller="ProjectUpdate"
+           asp-action="Create"
+           asp-route-projectId="@Model.ReliefProjectId"
+           class="btn btn-danger">
+
+            <i class="bi bi-plus-lg me-1"></i>
+
+            Add Update
+
+        </a>
+    }
+
+</div>
+
+        @if (Model.ProjectUpdates.Any())
+        {
+            <div class="row g-3">
+
+                @foreach (var update in Model.ProjectUpdates
+                    .OrderByDescending(u => u.CreatedAt))
+                {
+                    <div class="col-lg-6">
+
+                        <div class="card border-0 shadow-sm rounded-4">
+
+                            <div class="card-body p-4">
+
+                                <small class="text-muted">
+
+                                    @update.CreatedAt.ToString(
+                                        "dd MMM yyyy")
+
+                                </small>
+
+                                <h5 class="fw-bold mt-2">
+
+                                    @update.Title
+
+                                </h5>
+
+                                <p class="text-muted mb-0">
+
+                                    @update.Description
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-light border">
+
+                No project updates have been published yet.
+
+            </div>
+        }
+
+    </div>
+
+</div>

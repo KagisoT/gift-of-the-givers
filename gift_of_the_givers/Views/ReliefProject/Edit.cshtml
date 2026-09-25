@@ -1,0 +1,210 @@
+﻿@model gift_of_the_givers.Models.ReliefProject
+
+@{
+    ViewData["Title"] = "Edit Relief Project";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-xl-8">
+
+            <h1 class="fw-bold mb-1">
+                Edit Relief Project
+            </h1>
+
+            <p class="text-muted mb-4">
+                Update project information.
+            </p>
+
+            <div class="card border-0 shadow-sm rounded-4">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <form asp-action="Edit"
+                          method="post"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden"
+                               asp-for="ReliefProjectId" />
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger">
+                        </div>
+
+                        <div class="mb-3">
+
+                            <label asp-for="Name"
+                                   class="form-label fw-semibold">
+                                Project Name
+                            </label>
+
+                            <input asp-for="Name"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Name"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label asp-for="Description"
+                                   class="form-label fw-semibold">
+                                Description
+                            </label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="5"></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label asp-for="Location"
+                                   class="form-label fw-semibold">
+                                Location
+                            </label>
+
+                            <input asp-for="Location"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Location"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+
+                                <label asp-for="Status"
+                                       class="form-label fw-semibold">
+                                    Status
+                                </label>
+
+                                <select asp-for="Status"
+                                        asp-items="Html.GetEnumSelectList<gift_of_the_givers.Models.ReliefProjectStatus>()"
+                                        class="form-select">
+                                </select>
+
+                            </div>
+
+                            <div class="col-md-6">
+
+                                <label asp-for="StartDate"
+                                       class="form-label fw-semibold">
+                                    Start Date
+                                </label>
+
+                                <input asp-for="StartDate"
+                                       type="date"
+                                       class="form-control" />
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3 mt-3">
+
+                            <label asp-for="EndDate"
+                                   class="form-label fw-semibold">
+                                End Date
+                            </label>
+
+                            <input asp-for="EndDate"
+                                   type="date"
+                                   class="form-control" />
+
+                        </div>
+
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+                        {
+                            <div class="mb-3">
+
+                                <label class="form-label fw-semibold">
+                                    Current Image
+                                </label>
+
+                                <br />
+
+                                <img src="@Model.ImageUrl"
+                                     style="width:180px;height:120px;object-fit:cover;"
+                                     class="rounded-3" />
+
+                            </div>
+                        }
+
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+                                Replace Image
+                            </label>
+
+                            <input type="file"
+                                   name="imageFile"
+                                   class="form-control"
+                                   accept=".jpg,.jpeg,.png,.webp" />
+
+                            <div class="form-text">
+                                Leave empty to keep the current image.
+                            </div>
+
+                        </div>
+
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-danger px-4">
+
+                                Save Changes
+
+                            </button>
+
+                            <a asp-action="Details"
+                               asp-route-id="@Model.ReliefProjectId"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync(
+            "_ValidationScriptsPartial");
+    }
+
+}

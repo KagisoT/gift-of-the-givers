@@ -1,0 +1,130 @@
+﻿@model gift_of_the_givers.Models.Donation
+
+@{
+    ViewData["Title"] = "Donation Details";
+}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-header bg-dark text-white p-4">
+
+                    <h4 class="mb-0">
+                        Donation #@Model.DonationId
+                    </h4>
+
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="row mb-3">
+
+                        <div class="col-sm-6 text-muted">
+                            Amount
+                        </div>
+
+                        <div class="col-sm-6 fw-bold">
+                            @Model.Currency
+                            @Model.Amount.ToString("N2")
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-sm-6 text-muted">
+                            Donation Type
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Model.DonationType
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-sm-6 text-muted">
+                            Donation Date
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Model.DonationDate
+                            .ToLocalTime()
+                            .ToString("dd MMMM yyyy HH:mm")
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-sm-6 text-muted">
+                            Anonymous
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            @if (Model.IsAnonymous)
+                            {
+                                <span class="badge bg-secondary">
+                                    Yes
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">
+                                    No
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-6 text-muted">
+                            Tax Certificate Reference
+                        </div>
+
+                        <div class="col-sm-6">
+                            @Model.TaxCertificateReference
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-action="TaxCertificate"
+                           asp-route-id="@Model.DonationId"
+                           class="btn btn-outline-danger">
+
+                            Tax Certificate
+
+                        </a>
+
+                        <a asp-action="MyDonations"
+                           class="btn btn-secondary">
+
+                            Back
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

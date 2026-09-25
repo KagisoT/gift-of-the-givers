@@ -1,0 +1,104 @@
+﻿@model IEnumerable<gift_of_the_givers.Models.Donation>
+
+@{
+    Layout = "_EmployeeLayout";
+    ViewData["Title"] = "Donations";
+}
+
+<div class="mb-4">
+
+    <h1 class="fw-bold mb-1">
+        Donations
+    </h1>
+
+    <p class="text-muted">
+        Review donations received by the organisation.
+    </p>
+
+</div>
+
+
+<div class="bg-white rounded-4 border overflow-hidden">
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+            <tr>
+
+                <th>Amount</th>
+                <th>Currency</th>
+                <th>Type</th>
+                <th>Donor</th>
+                <th>Date</th>
+                <th>Tax Reference</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            @foreach (var donation in Model)
+            {
+                <tr>
+
+                    <td>
+
+                        <strong>
+                            @donation.Amount.ToString("N2")
+                        </strong>
+
+                    </td>
+
+                    <td>
+                        @donation.Currency
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-primary-subtle text-primary">
+
+                            @donation.DonationType
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        @if (donation.IsAnonymous)
+                        {
+                            <span>
+                                Anonymous
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                @(donation.User?.Email ?? "Guest")
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+                        @donation.DonationDate.ToString("dd MMM yyyy")
+                    </td>
+
+                    <td>
+                        @(donation.TaxCertificateReference ?? "Not issued")
+                    </td>
+
+                </tr>
+            }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
